@@ -4,13 +4,25 @@ Welcome to the Canoe technical test! This guide will walk you through the steps 
 
 ## Table of Contents
 
+0. [Tasks](#Tasks)
 1. [Prerequisites](#Prerequisites)
 2. [Installation](#installation)
 3. [Usage](#usage)
 4. [Running Tests](#running-tests)
 5. [Database Schema and ERD](#database-schema-and-erd)
 
+### Tasks
 
+1. Design and create a data model to store data for the entities described above. Please document your [ERD diagram.](#database-schema-and-erd) ✅
+2. Create a back-end service to support the following use cases:
+a. Display a list of funds optionally filtered by Name, Fund Manager, Year ✅
+b. An Update method to update a Fund and all related attributes.✅
+3. Create an event-driven back end process to support:
+a. If a new fund is created with a name and manager that matches the name or an alias of an existing fund with the same manager, throw a duplicate_fund_warning event. ✅
+b. Write a process to Consume the duplicate_fund_warning event ✅
+c. **Bonus** if time permitting: Add a method to the service created in #2 that will return a list of potentially duplicate funds - Not done. But if I was doing that -> this is how: 
+            - Save all duplicate_fund_warning to a table during queue processing job (This part done, instead of a table it print error log)
+            - Pull records from db and send back, when API endpoint hit
 ### Prerequisites
 
 Make sure you have the following installed on your machine:
@@ -36,14 +48,22 @@ cd canoe-app
 
 
 #### 2.	Build and Start the Containers
-Build the Docker containers and start them in detached mode.
+Build and start the Docker containers.
 ```bash
-docker-compose up -d --build
+docker compose -f docker-compose.yml up --build
 ```
 
 #### 3.	Run migration with seed
    Run the database migrations to set up the required tables. This step ensures that the database schema is in place.
 
+**Once you see this message in terminal:**
+
+```
+laravel_app  | NOTICE: fpm is running, pid 1
+laravel_app  | NOTICE: ready to handle connections
+```
+
+Open a new terminal and run this command
 ```bash
 docker exec laravel_app /bin/sh -c "php artisan migrate --seed --force"
 ```
@@ -52,9 +72,19 @@ docker exec laravel_app /bin/sh -c "php artisan migrate --seed --force"
 
 To access the application, visit:
 
-http://localhost:8000
+http://localhost:8000/api/v1/funds
 
 You can now interact with the API via your browser or tools like Postman.
+
+### Containers and Their Purpose
+
+This project uses Docker Compose to orchestrate several containers that work together to run the Laravel application and its dependencies. Below is a brief overview of each container:
+
+- **app (Laravel App - PHP-FPM):** This container runs the Laravel application using PHP-FPM. It serves the Laravel code and handles all PHP processing for the app.
+- **webserver (Nginx):** The Nginx container serves as the web server for the Laravel app, routing HTTP requests to the PHP-FPM container. It listens on port 8000 locally and routes traffic to the Laravel app.
+- **db (MySQL):** The MySQL container acts as the primary database for the Laravel app. It stores all application data and runs MySQL version 8.0.
+- **redis (Redis):** The Redis container provides caching and queue support for the Laravel app. It’s used for storing cache data and processing queued jobs.
+- **queue (Laravel Queue Worker):** The queue worker container runs the php artisan queue:work command to process background jobs. It connects to the Redis service to manage queued tasks like email sending and other deferred operations.
 
 ## Usage
 
@@ -117,19 +147,12 @@ You can run the automated tests for this application within the Docker container
 docker exec laravel_app /bin/sh -c "php artisan test"
 ```
 
+💡 A good future addition will be, to add `.github/workflows/code-check.yml` file in order to run automated test every push**
 ## ERD Diagram
 
 
 ![ERD Diagram Placeholder](https://github.com/saasscaleup/canoe-app/blob/master/canoe-erd.png?raw=true)
 
-
----
-
-If you encounter any issues, feel free to open a GitHub issue or reach out via email.
-
-Thank you for checking out the project!
-
----
 
 ### Notes
 
@@ -181,14 +204,14 @@ As our dataset grows, query performance can degrade. In order to ensure that we 
 
 ```
  Schema::table('funds', function (Blueprint $table) {
-            $table->index('name'); 
-            $table->index('fund_manager_id'); 
-            $table->index('start_year');
-        });
+    $table->index('name'); 
+    $table->index('fund_manager_id'); 
+    $table->index('start_year');
+});
 
-        Schema::table('fund_aliases', function (Blueprint $table) {
-            $table->index('name'); 
-        });
+Schema::table('fund_aliases', function (Blueprint $table) {
+    $table->index('name'); 
+});
 ```
 
 We can also consider creating Compound Index in case we know what are the columns that get queering the most **(Was not applied for this task)**
@@ -222,6 +245,7 @@ class HandleDuplicateFundWarning implements ShouldQueue
 {
 ...
 ```
+
 
 ### Other scaling suggestion
 
