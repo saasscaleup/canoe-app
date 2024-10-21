@@ -9,11 +9,11 @@ Welcome to the Canoe technical test! This guide will walk you through the steps 
 2. [Installation](#installation)
 3. [Usage](#usage)
 4. [Running Tests](#running-tests)
-5. [Database Schema and ERD](#database-schema-and-erd)
+5. [ERD Diagram](#erd-diagram)
 
 ### Tasks
 
-1. Design and create a data model to store data for the entities described above. Please document your [ERD diagram.](#database-schema-and-erd) ✅
+1. Design and create a data model to store data for the entities described above. Please document your [ERD diagram.](#erd-diagram) ✅
 2. Create a back-end service to support the following use cases:
 a. Display a list of funds optionally filtered by Name, Fund Manager, Year ✅
 b. An Update method to update a Fund and all related attributes.✅
