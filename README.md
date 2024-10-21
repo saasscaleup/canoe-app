@@ -1,4 +1,4 @@
-# Canoe technical test (Laravel Fund management app)
+# Canoe technical test (Laravel Funds management app)
 
 Welcome to the Canoe technical test! This guide will walk you through the steps required to set up the project locally using Docker, run it, execute tests, and explore the available API routes. You’ll also find instructions for using a pre-built Postman collection to test the API endpoints.
 
@@ -18,7 +18,7 @@ Welcome to the Canoe technical test! This guide will walk you through the steps 
 2. Create a back-end service to support the following use cases:
 a. Display a list of funds optionally filtered by Name, Fund Manager, Year ✅<br>
 b. An Update method to update a Fund and all related attributes.✅<br>
-3. Create an event-driven back end process to support:
+3. Create an event-driven back end process to support:<br>
 a. If a new fund is created with a name and manager that matches the name or an alias of an existing fund with the same manager, throw a duplicate_fund_warning event. ✅<br>
 b. Write a process to Consume the duplicate_fund_warning event ✅<br>
 c. **Bonus** if time permitting: Add a method to the service created in #2 that will return a list of potentially duplicate funds - Not done. But if I was doing that -> this is how: 
