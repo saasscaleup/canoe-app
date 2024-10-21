@@ -1,16 +1,14 @@
-# Laravel Dockerized Application
+# Canoe technical test (Laravel Fund management app)
 
-Welcome to the Laravel Dockerized Application! This guide will walk you through the steps required to set up the project locally using Docker, run it, execute tests, and explore the available API routes. You’ll also find instructions for using a pre-built Postman collection to test the API endpoints.
+Welcome to the Canoe technical test! This guide will walk you through the steps required to set up the project locally using Docker, run it, execute tests, and explore the available API routes. You’ll also find instructions for using a pre-built Postman collection to test the API endpoints.
 
 ## Table of Contents
 
 1. [Prerequisites](#Prerequisites)
 2. [Installation](#installation)
-3. [Access Application](#installation)
-3. [Running Tests](#running-tests)
-4. [API Routes](#api-routes)
-5. [Using the Postman Collection](#using-the-postman-collection)
-6. [Database Schema and ERD](#database-schema-and-erd)
+3. [Usage](#usage)
+4. [Running Tests](#running-tests)
+5. [Database Schema and ERD](#database-schema-and-erd)
 
 
 ### Prerequisites
@@ -19,6 +17,7 @@ Make sure you have the following installed on your machine:
 
 - [Docker](https://www.docker.com/products/docker-desktop)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [Postman](https://www.postman.com/downloads/)
 
 
 ## Installation
@@ -31,8 +30,8 @@ This project is fully Dockerize, meaning you don't need to install PHP, MySQL, o
 #### 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/saasscaleup/canoe-app.git
+cd canoe-app
 ```
 
 
@@ -42,14 +41,14 @@ Build the Docker containers and start them in detached mode.
 docker-compose up -d --build
 ```
 
-#### 3.	Run migration
+#### 3.	Run migration with seed
    Run the database migrations to set up the required tables. This step ensures that the database schema is in place.
 
 ```bash
-docker-compose exec app php artisan migrate --force
+docker exec laravel_app /bin/sh -c "php artisan migrate --seed --force"
 ```
 
-## Access the Application
+### Access the Application
 
 To access the application, visit:
 
@@ -57,46 +56,33 @@ http://localhost:8000
 
 You can now interact with the API via your browser or tools like Postman.
 
-### Stopping the Containers
+## Usage
 
-To stop the containers, bring down the running Docker services.
-
-## Running Tests
-
-You can run the automated tests for this application within the Docker container.
-
-1. **Run Feature/Unit Tests:**
-
-   Run all tests (both feature and unit tests). Laravel's testing system will display detailed output for passing or failing tests.
-
-2. **Running Specific Tests:**
-
-   If you want to run a specific test class, specify the file.
-
-## API Routes
+### API Routes
 
 This application provides a set of RESTful API routes that allow you to interact with the application data. Below is a summary of the key routes available.
 
-### API Endpoints
+#### API Endpoints
 
 | Method | Endpoint                  | Description                              |
 |--------|---------------------------|------------------------------------------|
-| GET    | `/api/v1/funds`            | List all funds (supports filtering)      |
-| POST   | `/api/v1/funds`            | Create a new fund                        |
-| GET    | `/api/v1/funds/{id}`       | Retrieve details of a specific fund      |
-| PUT    | `/api/v1/funds/{id}`       | Update a specific fund                   |
-| DELETE | `/api/v1/funds/{id}`       | Delete a specific fund                   |
+| GET    | `/api/v1/funds`            | List all funds (supports filtering)     |
+| POST   | `/api/v1/funds`            | Create a new fund                       |
+| GET    | `/api/v1/funds/{id}`       | Retrieve details of a specific fund     |
+| PUT    | `/api/v1/funds/{id}`       | Update a specific fund                  |
+| DELETE | `/api/v1/funds/{id}`       | Delete a specific fund                  |
 
 
-### Filtering Options (GET `/api/v1/funds`)
+#### Filtering Options (GET `/api/v1/funds`)
 
 You can filter the list of funds by providing the following query parameters:
 
-- `name`: Filter funds by name or alias.
-- `fund_manager`: Filter funds by the name of the fund manager.
-- `start_year`: Filter funds by their starting year.
+- `name`: Filter funds by name or alias(string).
+- `fund_manager`: Filter funds by the name of the fund manager(int).
+- `start_year`: Filter funds by their starting year(year).
 
-### Example Request:
+#### Example Request:
+
 ```
 GET /api/v1/funds?name=example&start_year=2020
 ```
@@ -104,14 +90,14 @@ GET /api/v1/funds?name=example&start_year=2020
 This will return all funds where the name contains "example" and the starting year is 2020.
 
 
-## Using the Postman Collection
+#### Using the Postman Collection
 
 To make testing easier, we've created a Postman collection that includes all the available API routes with pre-configured examples.
 
-### Steps to Use the Postman Collection:
+##### Steps to Use the Postman Collection:
 
 1. **Download the Collection**: 
-   [Postman Collection Download Link](#) (Link to your collection file)
+   [Postman Collection Download Link](https://github.com/saasscaleup/canoe-app/blob/master/canoe.postman_collection.json?raw=true) (Link to your collection file)
 
 2. **Import the Collection**: 
    Open Postman, click on "Import", and select the downloaded `.json` file.
@@ -122,21 +108,20 @@ To make testing easier, we've created a Postman collection that includes all the
 4. **Run the API Requests**: 
    You can now run the pre-configured requests to test the API endpoints directly from Postman.
 
-## Database Schema and ERD
 
-This application has a relational database structure with key entities like `Funds`, `Fund Managers`, and `Companies`.
+## Running Tests
 
-Here's an overview of the key tables and their relationships:
+You can run the automated tests for this application within the Docker container.
 
-### ERD Diagram
+```bash
+docker exec laravel_app /bin/sh -c "php artisan test"
+```
 
-*(Attach your ERD diagram here)*
+## ERD Diagram
 
-![ERD Diagram Placeholder](path/to/your-erd-diagram.png)
 
-## License
+![ERD Diagram Placeholder](https://github.com/saasscaleup/canoe-app/blob/master/canoe-erd.png?raw=true)
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ---
 

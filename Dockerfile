@@ -29,18 +29,6 @@ COPY --from=composer:2.5 /usr/bin/composer /usr/bin/composer
 # Copy existing application directory contents
 COPY . /var/www/html
 
-# Copy .env.example to .env
-# COPY .env.example .env
-
-# Set folders permissions
-RUN chown -R www-data:www-data /var/www/html/storage
-RUN chmod -R 775 /var/www/html/storage
-RUN chown www-data:www-data /var/www/html/public
-RUN chown www-data:www-data /var/www/html/bootstrap/cache
-
-# Install Laravel dependencies
-RUN composer install --prefer-dist --no-progress --no-interaction
-
 # Copy custom entrypoint script into the container
 COPY ./docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
