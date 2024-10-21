@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('funds', function (Blueprint $table) {
             $table->index('name'); 
-            $table->index('fund_manager_id'); 
             $table->index('start_year');
         });
 
@@ -29,7 +28,6 @@ return new class extends Migration
     {
         Schema::table('funds', function (Blueprint $table) {
             $table->dropIndex(['name']);
-            $table->dropIndex(['fund_manager_id']);
             $table->dropIndex(['start_year']);
         });
 

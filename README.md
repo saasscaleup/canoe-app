@@ -201,7 +201,6 @@ As our dataset grows, query performance can degrade. In order to ensure that we 
 ```
  Schema::table('funds', function (Blueprint $table) {
     $table->index('name'); 
-    $table->index('fund_manager_id'); 
     $table->index('start_year');
 });
 
