@@ -10,16 +10,17 @@ Welcome to the Canoe technical test! This guide will walk you through the steps 
 3. [Usage](#usage)
 4. [Running Tests](#running-tests)
 5. [ERD Diagram](#erd-diagram)
+6. [Scalability considerations](#scalability-considerations)
 
 ### Tasks
 
-1. Design and create a data model to store data for the entities described above. Please document your [ERD diagram.](#erd-diagram) ✅
+1. Design and create a data model to store data for the entities described above. Please document your [ERD diagram.](#erd-diagram) ✅<br>
 2. Create a back-end service to support the following use cases:
-a. Display a list of funds optionally filtered by Name, Fund Manager, Year ✅
-b. An Update method to update a Fund and all related attributes.✅
+a. Display a list of funds optionally filtered by Name, Fund Manager, Year ✅<br>
+b. An Update method to update a Fund and all related attributes.✅<br>
 3. Create an event-driven back end process to support:
-a. If a new fund is created with a name and manager that matches the name or an alias of an existing fund with the same manager, throw a duplicate_fund_warning event. ✅
-b. Write a process to Consume the duplicate_fund_warning event ✅
+a. If a new fund is created with a name and manager that matches the name or an alias of an existing fund with the same manager, throw a duplicate_fund_warning event. ✅<br>
+b. Write a process to Consume the duplicate_fund_warning event ✅<br>
 c. **Bonus** if time permitting: Add a method to the service created in #2 that will return a list of potentially duplicate funds - Not done. But if I was doing that -> this is how: 
             - Save all duplicate_fund_warning to a table during queue processing job (This part done, instead of a table it print error log)
             - Pull records from db and send back, when API endpoint hit
@@ -154,12 +155,7 @@ docker exec laravel_app /bin/sh -c "php artisan test"
 ![ERD Diagram Placeholder](https://github.com/saasscaleup/canoe-app/blob/master/canoe-erd.png?raw=true)
 
 
-### Notes
-
-- **Queue Workers**: If you're setting up queues, make sure the Redis service is running, and use the queue worker to process jobs.
-- **Caching**: Laravel's cache driver is set to use Redis. Ensure Redis is running for cache functionality.
-
-## Suggestions and Best Practices to support Scaling and Security
+## Scalability considerations
 
 ### 1. Use UUID as id or uid
 
