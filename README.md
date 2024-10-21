@@ -1,4 +1,4 @@
-# Canoe technical test (Laravel Funds management app)
+# Laravel Funds management app
 
 Welcome to the Canoe technical test! This guide will walk you through the steps required to set up the project locally using Docker, run it, execute tests, and explore the available API routes. You’ll also find instructions for using a pre-built Postman collection to test the API endpoints.
 
