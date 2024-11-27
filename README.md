@@ -43,8 +43,8 @@ This project is fully Dockerize, meaning you don't need to install PHP, MySQL, o
 #### 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/saasscaleup/laravel-11-fund-management.git
-cd laravel-11-fund-management
+git clone https://github.com/saasscaleup/laravel-11-funds-management.git
+cd laravel-11-funds-management
 ```
 
 
@@ -128,7 +128,7 @@ To make testing easier, we've created a Postman collection that includes all the
 ##### Steps to Use the Postman Collection:
 
 1. **Download the Collection**: 
-   [Postman Collection Download Link](https://github.com/saasscaleup/laravel-11-fund-management/blob/master/canoe.postman_collection.json?raw=true) (Link to your collection file)
+   [Postman Collection Download Link](https://github.com/saasscaleup/laravel-11-funds-management/blob/master/canoe.postman_collection.json?raw=true) (Link to your collection file)
 
 2. **Import the Collection**: 
    Open Postman, click on "Import", and select the downloaded `.json` file.
@@ -152,7 +152,7 @@ docker exec laravel_app /bin/sh -c "php artisan test"
 ## ERD Diagram
 
 
-![ERD Diagram Placeholder](https://github.com/saasscaleup/laravel-11-fund-management/blob/master/canoe-erd.png?raw=true)
+![ERD Diagram Placeholder](https://github.com/saasscaleup/laravel-11-funds-management/blob/master/canoe-erd.png?raw=true)
 
 
 ## Scalability considerations
